@@ -1983,6 +1983,13 @@ class PipelineRun(models.Model):
         on_delete=models.CASCADE,
     )
 
+    pipeline_version = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        db_index=True,
+    )
+
     run_id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,

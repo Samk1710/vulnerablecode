@@ -169,6 +169,9 @@ class VulnerableCodeBaseImporterPipeline(VulnerableCodePipeline):
     importer_name = None
     advisory_confidence = MAX_CONFIDENCE
 
+    run_once = False
+    pipeline_version = None
+
     @classmethod
     def steps(cls):
         return (
@@ -261,6 +264,9 @@ class VulnerableCodeBaseImporterPipelineV2(VulnerableCodePipeline):
     spdx_license_expression = None
     repo_url = None
     ignorable_versions = []
+
+    run_once = False
+    pipeline_version = None
 
     @classmethod
     def steps(cls):

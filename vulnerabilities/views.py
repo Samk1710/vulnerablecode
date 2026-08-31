@@ -65,7 +65,7 @@ from vulnerabilities.utils import TYPES_WITH_MULTIPLE_IMPORTERS
 from vulnerabilities.utils import get_advisories_from_groups
 from vulnerabilities.utils import safe_altcha_redirect
 from vulnerablecode import __version__ as VULNERABLECODE_VERSION
-from vulnerablecode.settings import ALTCHA_SESSION_TIMEOUT
+from vulnerablecode.settings import VULNERABLECODE_ALTCHA_SESSION_TIMEOUT
 from vulnerablecode.settings import env
 
 PAGE_SIZE = 10
@@ -1119,7 +1119,10 @@ class AdvisoryToDoListView(ListView, FormMixin):
             qs = qs.filter(issue_type=issue_type)
 
         qs.prefetch_related("advisories__aliases")
-        if form.is_valid() and (search := form.cleaned_data.get("search")):
+
+        if form.is_valid() and (avid := form.cleaned_data.get("avid")):
+            return qs.filter(advisories__avid=avid).distinct()
+        elif form.is_valid() and (search := form.cleaned_data.get("search")):
             return qs.filter(advisories__aliases__alias__icontains=search).distinct()
 
         return qs
@@ -1166,7 +1169,7 @@ class AltchaView(FormView):
         verified_at = request.session.get("altcha_verified_at")
 
         if verified_at:
-            if time.time() - verified_at < ALTCHA_SESSION_TIMEOUT:
+            if time.time() - verified_at < VULNERABLECODE_ALTCHA_SESSION_TIMEOUT:
                 next_url = request.GET.get("next", "/")
                 return safe_altcha_redirect(next_url)
 

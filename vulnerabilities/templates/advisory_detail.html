@@ -25,7 +25,7 @@ VulnerableCode Advisory Details - {{ advisory.advisory_id }}
 
         <div class="tabs is-boxed" id="tabs">
             <ul>
-                <li class="{% if not 'epss_page' in request.GET %}is-active{% endif %}" data-tab="essentials">
+                <li class="{% if not is_epss_tab_active %}is-active{% endif %}" data-tab="essentials">
                     <a>
                         <span>Essentials</span>
                     </a>
@@ -55,7 +55,7 @@ VulnerableCode Advisory Details - {{ advisory.advisory_id }}
                     </li>
                 {% endif %}
 
-                <li class="{% if 'epss_page' in request.GET %}is-active{% endif %}" data-tab="epss">
+                <li class="{% if is_epss_tab_active %}is-active{% endif %}" data-tab="epss">
                     <a>
                         <span>
                             EPSS
@@ -101,7 +101,7 @@ VulnerableCode Advisory Details - {{ advisory.advisory_id }}
             </ul>
         </div>
         <div id="tab-content">
-            <div class="tab-div is-active" data-content="essentials">
+            <div class="tab-div {% if not is_epss_tab_active %}is-active{% endif %}" data-content="essentials">
                 <div class="tab-nested-div">
                     <table class="table vcio-table width-100-pct mt-2">
                         <tbody>
@@ -459,7 +459,7 @@ VulnerableCode Advisory Details - {{ advisory.advisory_id }}
                 {% endfor %}
             </div>
         
-            <div class="tab-div content {% if 'epss_page' in request.GET %}is-active{% endif %}" data-content="epss">
+            <div class="tab-div content {% if is_epss_tab_active %}is-active{% endif %}" data-content="epss">
                 {% if epss_data %}
                     <div class="has-text-weight-bold tab-nested-div ml-1 mb-1 mt-1">
                         Exploit Prediction Scoring System (EPSS)

@@ -806,6 +806,7 @@ class AdvisoryDetails(VulnerableCodeDetailView):
         )
 
         show_epss_chart = "epss_page" in self.request.GET or advisory.severities.exists()
+        is_epss_tab_active = "epss_page" in self.request.GET
 
         context.update(
             {
@@ -821,6 +822,7 @@ class AdvisoryDetails(VulnerableCodeDetailView):
                 "epss_history_data": epss_history_data,
                 "epss_pagination_obj": epss_pagination_obj,
                 "show_epss_chart": show_epss_chart,
+                "is_epss_tab_active": is_epss_tab_active,
             }
         )
         return context
